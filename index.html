@@ -1,0 +1,143 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Tabsnap</title>
+<link rel="manifest" href="manifest.json"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#14181c">
+<style>
+:root{--bg:#f4f3ee;--card:#fff;--ink:#171b1f;--mut:#6b7480;--line:#dcdad2;--acc:#b8862b;--on:#fff}
+:root[data-t=dark]{--bg:#14181c;--card:#1d2329;--ink:#eceae3;--mut:#8b95a1;--line:#2f3840;--acc:#d6a642;--on:#14181c}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 -apple-system,system-ui,"Segoe UI",sans-serif;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
+main{max-width:640px;margin:0 auto;padding:18px 16px 28px}
+header{display:flex;align-items:center;gap:12px}header img{width:40px;height:40px;border-radius:9px}
+h1,h2{font-family:"Iowan Old Style","Palatino Linotype",Georgia,serif;margin:0;font-weight:600}h1{font-size:30px}h2{font-size:19px;margin-bottom:6px}
+.lead,.hint{color:var(--mut);margin:6px 0 14px;font-size:14.5px}
+section{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-top:14px}
+.drop{display:block;border:1.5px dashed var(--acc);border-radius:12px;padding:22px 14px;text-align:center;cursor:pointer}
+.drop b{display:block;font-size:17px}.drop span{color:var(--mut);font-size:13.5px}
+canvas#prev{width:100%;border-radius:10px;touch-action:none;display:block;background:#000}
+input[type=range]{width:100%;accent-color:var(--acc);margin:12px 0 4px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:12px 0}
+select{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:6px 8px}
+.row input[type=range]{width:55%;margin:0}
+button{font:inherit;font-weight:600;border:0;border-radius:11px;padding:12px 16px;background:var(--acc);color:var(--on);cursor:pointer}
+button.ghost{background:none;color:var(--ink);border:1px solid var(--line);padding:8px 12px;font-weight:500;font-size:14px}
+button.w{width:100%}
+.bar{height:6px;background:var(--line);border-radius:3px;margin-top:12px;overflow:hidden}.bar i{display:block;height:100%;width:0;background:var(--acc);transition:width .2s}
+#grid{display:grid;gap:12px;margin:12px 0}
+.card{border:1px solid var(--line);border-radius:10px;overflow:hidden;transition:opacity .2s}.card.off{opacity:.35}
+.card canvas{width:100%;display:block;background:#fff}
+.card div{display:flex;justify-content:space-between;align-items:center;padding:6px 10px;font-size:13.5px;color:var(--mut)}
+.card button{padding:4px 10px;font-size:13px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+footer{text-align:center;margin-top:22px}#ver{font-size:11px;color:var(--mut);user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;padding:8px}
+#log{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:flex-end;justify-content:center;z-index:9}#log.on{display:flex}
+#log .p{background:var(--card);width:100%;max-width:520px;border-radius:18px 18px 0 0;padding:16px 18px calc(18px + env(safe-area-inset-bottom));animation:up .25s ease}
+@keyframes up{from{transform:translateY(40px);opacity:0}}
+#log .h{display:flex;justify-content:space-between;align-items:center}
+#th{background:none;border:0;padding:6px;color:var(--ink);line-height:0}#th svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+:root[data-t=dark] .moon,:root:not([data-t=dark]) .sun{display:none}
+#log ul{margin:8px 0 0;padding-left:18px;font-size:14px}#log small{color:var(--mut)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head><body><main>
+<header><img src="icon-192.png" alt=""><h1>Tabsnap</h1></header>
+<p class="lead">Turn a guitar tab video into one printable sheet. Everything stays on your device.</p>
+<section><label class="drop" for="file"><b>Choose a video</b><span id="fname">A tab video saved on this device</span></label><input id="file" type="file" accept="video/*" hidden></section>
+<section id="s2" hidden><h2>Tab area</h2><p class="hint">Drag on the frame to box the tab. Use the slider to find a frame where the tab is showing.</p>
+<canvas id="prev"></canvas><input id="scrub" type="range" min="0" max="1" step="0.1" value="0"><button class="ghost" id="reset">Use full frame</button></section>
+<section id="s3" hidden><h2>Scan</h2>
+<div class="row"><span>Tab style</span><select id="mode"><option value="pages" selected>Flips between pages</option><option value="x">Scrolls sideways</option><option value="y">Scrolls up</option></select></div>
+<div class="row"><span>Check a frame every</span><select id="step"><option value="0.5">0.5 s</option><option value="1" selected>1 s</option><option value="2">2 s</option><option value="3">3 s</option></select></div>
+<div id="pgopts"><div class="row"><span>Change sensitivity</span><input id="sens" type="range" min="1" max="10" value="5"></div>
+<p class="hint">Raise it if a page was missed. Lower it if you get duplicates.</p></div><p class="hint" id="scopts" hidden>Scrolling tabs are joined into one strip, then cut into rows or pages. Check every 0.5 s if the scroll is fast.</p>
+<button class="w" id="go">Scan video</button><div class="bar"><i id="pb"></i></div><p class="hint" id="msg"></p></section>
+<section id="s4" hidden><h2 id="cnt">Pages found</h2><p class="hint">Remove anything that isn't tab. Pages keep video order.</p><div id="grid"></div>
+<div class="two"><button id="pdf">Save PDF</button><button id="img">Save long image</button></div></section>
+<footer><span id="ver">v1.1</span></footer></main>
+<div id="log"><div class="p"><div class="h"><h2>What's new</h2><button id="th" aria-label="Switch light or dark mode"><svg class="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/></svg></button></div>
+<ul><li><b>1.1</b> Scroll stitching: join tabs that scroll sideways or upward into rows or pages.</li><li><b>1.0</b> First version: pick a video, box the tab, auto-pick one clean frame per page, export PDF or one long image.</li></ul><small>Hold the version number to open this panel.</small></div></div>
+<video id="v" muted playsinline preload="auto" style="position:fixed;width:2px;height:2px;opacity:0;pointer-events:none"></video>
+<script>
+const $=s=>document.querySelector(s),V=$('#v'),prev=$('#prev'),pc=prev.getContext('2d');
+let note='',crop={x:0,y:0,w:1,h:1},frames=[],busy=false,stop=false,vname='tabs';
+const R=document.documentElement,st=k=>{try{return localStorage.getItem(k)}catch(e){}};
+R.dataset.t=st('tabsnap-t')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
+$('#th').onclick=()=>{R.dataset.t=R.dataset.t=='dark'?'light':'dark';try{localStorage.setItem('tabsnap-t',R.dataset.t)}catch(e){}};
+let ht;const vb=$('#ver');vb.onpointerdown=()=>{ht=setTimeout(()=>$('#log').classList.add('on'),600)};
+['up','leave','cancel'].forEach(e=>vb['onpointer'+e]=()=>clearTimeout(ht));vb.oncontextmenu=e=>e.preventDefault();
+$('#log').onclick=e=>{if(e.target.id=='log')e.target.classList.remove('on')};
+const cv=(w,h)=>{const c=document.createElement('canvas');c.width=w;c.height=h;return c};
+const seek=t=>new Promise(r=>{t=Math.min(Math.max(t,0),V.duration-.05);if(Math.abs(V.currentTime-t)<.001)return r();const h=()=>{V.removeEventListener('seeked',h);r()};V.addEventListener('seeked',h);V.currentTime=t;setTimeout(r,3000)});
+function grab(maxW){const W=V.videoWidth,H=V.videoHeight,sw=crop.w*W,sh=crop.h*H,k=Math.min(1,maxW/sw),c=cv(Math.max(1,Math.round(sw*k)),Math.max(1,Math.round(sh*k)));c.getContext('2d').drawImage(V,crop.x*W,crop.y*H,sw,sh,0,0,c.width,c.height);return c}
+function drawPrev(){const w=Math.min(prev.parentElement.clientWidth-32,640);prev.width=w;prev.height=Math.round(V.videoHeight*w/V.videoWidth);pc.drawImage(V,0,0,prev.width,prev.height);const x=crop.x*prev.width,y=crop.y*prev.height,cw=crop.w*prev.width,ch=crop.h*prev.height;pc.fillStyle='rgba(0,0,0,.55)';pc.beginPath();pc.rect(0,0,prev.width,prev.height);pc.rect(x,y,cw,ch);pc.fill('evenodd');pc.strokeStyle='#d6a642';pc.lineWidth=2;pc.strokeRect(x,y,cw,ch)}
+$('#file').onchange=e=>{const f=e.target.files[0];if(!f)return;vname=f.name.replace(/\.[^.]+$/,'');$('#fname').textContent=f.name;V.src=URL.createObjectURL(f);
+V.onloadedmetadata=async()=>{crop={x:0,y:0,w:1,h:1};$('#s2').hidden=$('#s3').hidden=false;$('#s4').hidden=true;const s=$('#scrub');s.max=V.duration;s.value=V.duration*.3;await seek(V.duration*.3);drawPrev()};V.onerror=()=>alert('This video format can\'t be opened here. Try an MP4.')};
+let tmr;$('#scrub').oninput=e=>{clearTimeout(tmr);tmr=setTimeout(async()=>{await seek(+e.target.value);drawPrev()},60)};
+$('#reset').onclick=()=>{crop={x:0,y:0,w:1,h:1};drawPrev()};
+let ds=null;const pt=e=>{const b=prev.getBoundingClientRect();return{x:Math.min(1,Math.max(0,(e.clientX-b.left)/b.width)),y:Math.min(1,Math.max(0,(e.clientY-b.top)/b.height))}};
+prev.onpointerdown=e=>{ds=pt(e);prev.setPointerCapture(e.pointerId)};
+prev.onpointermove=e=>{if(!ds)return;const p=pt(e);crop={x:Math.min(ds.x,p.x),y:Math.min(ds.y,p.y),w:Math.abs(p.x-ds.x),h:Math.abs(p.y-ds.y)};drawPrev()};
+prev.onpointerup=()=>{ds=null;if(crop.w<.03||crop.h<.03){crop={x:0,y:0,w:1,h:1};drawPrev()}};
+const diff=(a,b)=>{let n=0;for(let i=0;i<a.length;i++)if(Math.abs(a[i]-b[i])>40)n++;return n/a.length};
+function medoid(seg){const c=seg.length>7?Array.from({length:7},(_,i)=>seg[Math.round(i*(seg.length-1)/6)]):seg;let best=c[0],bs=1e9;for(const a of c){let s=0;for(const b of c)if(a!==b)s+=diff(a.g,b.g);if(s<bs){bs=s;best=a}}return best}
+const prog=p=>$('#pb').style.width=Math.round(p*100)+'%';
+$('#go').onclick=async()=>{if(busy){stop=true;return}
+busy=true;stop=false;$('#go').textContent='Cancel';$('#s4').hidden=true;
+const step=+$('#step').value,thr=.1/$('#sens').value,dur=V.duration,S=[],md=$('#mode').value;note='';
+for(let t=0;t<dur&&!stop&&md=='pages';t+=step){await seek(t);const c=grab(240),d=c.getContext('2d').getImageData(0,0,c.width,c.height).data,g=new Uint8Array(c.width*c.height);for(let i=0;i<g.length;i++)g[i]=d[i*4]*.3+d[i*4+1]*.59+d[i*4+2]*.11;S.push({t,g});prog(t/dur*.8);$('#msg').textContent='Scanning '+fmt(t)+' of '+fmt(dur)}
+if(!stop&&S.length){let segs=[],cur=[S[0]];for(let i=1;i<S.length;i++){if(diff(S[i].g,cur[cur.length-1].g)>thr){segs.push(cur);cur=[]}cur.push(S[i])}segs.push(cur);
+const min=step>=2?1:2,f=segs.filter(s=>s.length>=min);if(f.length)segs=f;
+const m=[];for(const s of segs){const rep=medoid(s);if(m.length&&diff(m[m.length-1].g,rep.g)<thr)continue;m.push(rep)}
+frames=[];for(let i=0;i<m.length&&!stop;i++){await seek(m[i].t);frames.push({t:m[i].t,c:grab(1600),keep:true});prog(.8+.2*(i+1)/m.length);$('#msg').textContent='Capturing page '+(i+1)+' of '+m.length}
+if(!stop){render();$('#s4').hidden=false;$('#s4').scrollIntoView({behavior:'smooth'})}}
+if(md!='pages')await stitch(md,step,dur);
+$('#msg').textContent=stop?'Cancelled.':note;busy=false;$('#go').textContent='Scan video';prog(0)};
+function edges(c,ax,th){const d=c.getContext('2d').getImageData(0,0,c.width,c.height).data,w=c.width,h=c.height,g=new Uint8Array(w*h),e=new Uint8Array(w*h);for(let i=0;i<g.length;i++)g[i]=d[i*4]*.3+d[i*4+1]*.59+d[i*4+2]*.11;
+if(ax=='x'){for(let y=0;y<h;y++)for(let x=1;x<w-1;x++)e[y*w+x]=Math.abs(g[y*w+x+1]-g[y*w+x-1])>th?1:0}else{for(let y=1;y<h-1;y++)for(let x=0;x<w;x++)e[y*w+x]=Math.abs(g[(y+1)*w+x]-g[(y-1)*w+x])>th?1:0}return{e,w,h}}
+function serr(A,B,m,ax,cs){const w=A.w,h=A.h,a=A.e,b=B.e;let n=0,d=0;
+if(ax=='x'){for(let y=0;y<h;y+=cs)for(let x=0;x<w-m;x++){const p=a[y*w+x+m],q=b[y*w+x];if(p|q){d++;if(p!==q)n++}}}
+else{for(let y=0;y<h-m;y++)for(let x=0;x<w;x+=cs){const p=a[(y+m)*w+x],q=b[y*w+x];if(p|q){d++;if(p!==q)n++}}}
+return d<15?-1:n/d}
+async function stitch(ax,step,dur){
+const X=ax=='x',W0=V.videoWidth,H0=V.videoHeight,sw=crop.w*W0,sh=crop.h*H0,kf=Math.min(1,1200/sw),kc=Math.min(1,300/(X?sw:sh));
+const gk=k=>{const c=cv(Math.max(8,Math.round(sw*k)),Math.max(8,Math.round(sh*k)));c.getContext('2d').drawImage(V,crop.x*W0,crop.y*H0,sw,sh,0,0,c.width,c.height);return c};
+const Wc=Math.round(sw*kf),Hc=Math.round(sh*kf),P=X?1100:Math.round(Wc*1614/1100),CAP=Math.min(16000,Math.floor(16e6/(X?Hc:Wc))),
+SC=cv(X?CAP:Wc,X?Hc:CAP),ctx=SC.getContext('2d');let len=0,np=0,ref=null,jumps=0;frames=[];
+const add=c=>{const a=X?c.width:c.height;if(len+a>CAP)flush(false);ctx.drawImage(c,X?len:0,X?0:len);len+=a};
+function cutAt(pos){const s=pos+Math.floor(P*.85),n=pos+P-s,w=X?n:Wc,h=X?Hc:n,d=ctx.getImageData(X?s:0,X?0:s,w,h).data,sc=new Array(n).fill(0);let mean=0;
+for(let i=0;i<d.length;i+=4)mean+=d[i]*.3+d[i+1]*.59+d[i+2]*.11;mean/=w*h;
+for(let y=0;y<h;y++)for(let x=0;x<w;x++){const i=(y*w+x)*4;if(Math.abs(d[i]*.3+d[i+1]*.59+d[i+2]*.11-mean)>60)sc[X?x:y]++}
+let b=0;for(let i=0;i<n;i++)if(sc[i]<=sc[b])b=i;return s+b}
+function piece(pos,end){const c=cv(X?P:Wc,X?Hc:P),x=c.getContext('2d'),p=ctx.getImageData(X?pos:0,X?0:pos,1,1).data;x.fillStyle='rgb('+p[0]+','+p[1]+','+p[2]+')';x.fillRect(0,0,c.width,c.height);
+if(X)x.drawImage(SC,pos,0,end-pos,Hc,0,0,end-pos,Hc);else x.drawImage(SC,0,pos,Wc,end-pos,0,0,Wc,end-pos);frames.push({label:'Part '+(++np),ax,c,keep:true})}
+function flush(fin){let pos=0;while(len-pos>=P||(fin&&len-pos>3)){const end=len-pos>=P?cutAt(pos):len;piece(pos,end);pos=end}
+if(fin){len=0;return}if(pos>0){const rem=len-pos,t=cv(SC.width,SC.height);t.getContext('2d').drawImage(SC,0,0);ctx.clearRect(0,0,SC.width,SC.height);
+if(X)ctx.drawImage(t,pos,0,rem,Hc,0,0,rem,Hc);else ctx.drawImage(t,0,pos,Wc,rem,0,0,Wc,rem);len=rem}}
+for(let t=0;t<dur&&!stop;t+=step){await seek(t);const F=gk(kf),FE=edges(F,ax,40),CE=edges(gk(kc),ax,18);prog(t/dur*.95);$('#msg').textContent='Joining '+fmt(t)+' of '+fmt(dur);
+if(!ref){add(F);ref={FE,CE};continue}
+const L=X?CE.w:CE.h;let bm=0,be=2;
+for(let m=0;m<=Math.floor(L*.75);m++){const e=serr(ref.CE,CE,m,ax,Math.ceil((X?CE.h:CE.w)/100));if(e>=0&&e<be-.005){be=e;bm=m}}
+if(be===2)continue;if(be>.5){add(F);ref={FE,CE};jumps++;continue}
+const Lf=X?FE.w:FE.h,kk=Lf/L,w=Math.ceil(kk)+2,cf=Math.ceil((X?FE.h:FE.w)/300);let fm=0,fe=2;
+for(let m=Math.max(0,Math.round(bm*kk)-w);m<=Math.min(Math.floor(Lf*.85),Math.round(bm*kk)+w);m++){const e=serr(ref.FE,FE,m,ax,cf);if(e>=0&&e<fe-.003){fe=e;fm=m}}
+if(fe===2||fm<3)continue;
+const c=X?cv(fm,F.height):cv(F.width,fm);c.getContext('2d').drawImage(F,X?F.width-fm:0,X?0:F.height-fm,c.width,c.height,0,0,c.width,c.height);add(c);ref={FE,CE}}
+flush(true);if(jumps)note=jumps+(jumps==1?' jump':' jumps')+' where the picture changed suddenly. Check those spots.';
+if(!stop){render();$('#s4').hidden=false;$('#s4').scrollIntoView({behavior:'smooth'})}}
+$('#mode').onchange=()=>{const p=$('#mode').value=='pages';$('#pgopts').hidden=!p;$('#scopts').hidden=p};
+const fmt=t=>Math.floor(t/60)+':'+String(Math.floor(t%60)).padStart(2,'0');
+function render(){const g=$('#grid');g.innerHTML='';frames.forEach(f=>{const d=document.createElement('div');d.className='card'+(f.keep?'':' off');const b=document.createElement('button');b.className='ghost';b.textContent=f.keep?'Remove':'Restore';b.onclick=()=>{f.keep=!f.keep;render()};const m=document.createElement('div');m.innerHTML='<span>'+(f.label||fmt(f.t))+'</span>';m.append(b);d.append(f.c,m);g.append(d)});
+const n=frames.filter(f=>f.keep).length;$('#cnt').textContent=n?n+(n==1?' page found':' pages found'):'No pages found';if(!frames.length)$('#grid').innerHTML='<p class="hint">Nothing changed in that area. Try boxing the tab more tightly or raising the sensitivity.</p>'}
+function layout(list){const W=1240,H=1754,M=70,G=28,pages=[];let c,x,y;const np=()=>{c=cv(W,H);x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,W,H);pages.push(c);y=M};np();
+for(const f of list){let w=W-2*M,h=f.c.height*w/f.c.width;if(h>H-2*M){h=H-2*M;w=f.c.width*h/f.c.height}if(y+h>H-M&&y>M)np();x.drawImage(f.c,M,y,w,h);y+=h+G}return pages}
+function makePDF(pg){const enc=new TextEncoder(),parts=[],off=[];let len=0;const add=x=>{const b=typeof x=='string'?enc.encode(x):x;parts.push(b);len+=b.length};
+const obj=(id,h,s)=>{off[id]=len;add(id+' 0 obj\n'+h);if(s){add('\nstream\n');add(s);add('\nendstream')}add('\nendobj\n')};
+add('%PDF-1.4\n');obj(1,'<</Type/Catalog/Pages 2 0 R>>');obj(2,'<</Type/Pages/Kids['+pg.map((_,i)=>(3+i*3)+' 0 R').join(' ')+']/Count '+pg.length+'>>');
+pg.forEach((p,i)=>{const a=3+i*3,cs='q 595 0 0 842 0 0 cm /I Do Q';obj(a,'<</Type/Page/Parent 2 0 R/MediaBox[0 0 595 842]/Resources<</XObject<</I '+(a+2)+' 0 R>>>>/Contents '+(a+1)+' 0 R>>');obj(a+1,'<</Length '+cs.length+'>>',cs);
+obj(a+2,'<</Type/XObject/Subtype/Image/Width '+p.w+'/Height '+p.h+'/ColorSpace/DeviceRGB/BitsPerComponent 8/Filter/DCTDecode/Length '+p.jpg.length+'>>',p.jpg)});
+const xr=len,N=3+pg.length*3;add('xref\n0 '+N+'\n0000000000 65535 f \n');for(let i=1;i<N;i++)add(String(off[i]).padStart(10,'0')+' 00000 n \n');
+add('trailer\n<</Size '+N+'/Root 1 0 R>>\nstartxref\n'+xr+'\n%%EOF');return new Blob(parts,{type:'application/pdf'})}
+function save(b,n){const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=n;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),5000)}
+const keep=()=>frames.filter(f=>f.keep);
+$('#pdf').onclick=()=>{const l=keep();if(!l.length)return;const pg=layout(l).map(c=>({w:c.width,h:c.height,jpg:Uint8Array.from(atob(c.toDataURL('image/jpeg',.92).split(',')[1]),ch=>ch.charCodeAt(0))}));save(makePDF(pg),vname+' tab.pdf')};
+$('#img').onclick=()=>{const l=keep();if(!l.length)return;const G=l[0].ax=='y'?0:24,W=Math.max(...l.map(f=>f.c.width));let H=0;l.forEach(f=>H+=f.c.height*W/f.c.width+G);const k=Math.min(1,Math.sqrt(16e6/(W*H))),c=cv(Math.round(W*k),Math.round(H*k)),x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);let y=0;
+l.forEach(f=>{const h=f.c.height*W/f.c.width*k;x.drawImage(f.c,0,y,c.width,h);y+=h+G*k});c.toBlob(b=>save(b,vname+' tab.png'))};
+if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js');
+</script></body></html>
