@@ -59,6 +59,7 @@ footer{text-align:center;margin-top:22px}#ver{font-size:11px;color:var(--mut);us
 <div class="row"><span>Tab style</span><select id="mode"><option value="pages" selected>Flips between pages</option><option value="x">Scrolls sideways</option><option value="y">Scrolls up</option></select></div>
 <div class="row"><span>Bars per row</span><select id="bpr"><option value="0" selected>Auto</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select></div>
 <div class="row"><span>Auto-remove highlights</span><input id="auto2" type="checkbox" checked style="width:46px;height:26px;accent-color:var(--acc)"></div>
+<div class="row"><span>Sort sections by bar number</span><input id="secsort" type="checkbox" checked style="width:46px;height:26px;accent-color:var(--acc)"></div>
 <div class="row"><span>Check a frame every</span><select id="step"><option value="0.5">0.5 s</option><option value="1" selected>1 s</option><option value="2">2 s</option><option value="3">3 s</option></select></div>
 <div id="pgopts"><div class="row" style="margin-bottom:4px"><span>Change sensitivity</span><b id="sval" style="white-space:pre"></b></div><input id="sens" type="range" min="1" max="10" value="5" style="width:100%;margin:6px 0 0"><div class="ticks"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span></div><div class="ticks lab"><span>Fewer pages</span><span>More pages</span></div><div class="sh" id="sh" hidden></div></div>
 <button class="w" id="go">Scan video</button><div class="bar"><i id="pb"></i></div><p class="hint" id="msg"></p></section>
@@ -67,9 +68,9 @@ footer{text-align:center;margin-top:22px}#ver{font-size:11px;color:var(--mut);us
 <div class="fields" style="grid-template-columns:1fr auto;align-items:start;margin-top:-4px"><div style="display:grid;gap:8px"><select id="tun" aria-label="Tuning"><option value="Standard - EADGBE">Standard - EADGBE</option><option value="Drop D - DADGBE">Drop D - DADGBE</option><option value="Half step down - Eb Ab Db Gb Bb Eb">Half step down - Eb Ab Db Gb Bb Eb</option><option value="Full step down - DGCFAD">Full step down - DGCFAD</option><option value="DADGAD">DADGAD</option><option value="Open G - DGDGBD">Open G - DGDGBD</option><option value="Open D - DADF#AD">Open D - DADF#AD</option><option value="Open E - EBEG#BE">Open E - EBEG#BE</option><option value="Open C - CGCGCE">Open C - CGCGCE</option><option value="custom">Custom…</option></select><input id="tunc" type="text" placeholder="Custom tuning" autocomplete="off" hidden></div><div class="capo"><span>Capo</span><div class="wheelbox"><div class="wheel" id="capw"></div></div><input id="cap" type="hidden" value="0"></div></div>
 <div class="two"><button id="pdf">Save PDF</button><button id="img">Save long image</button></div><button class="ghost w" id="fold" hidden style="margin-top:10px">Save folder: Downloads</button><p class="meta" id="sv" style="margin:8px 0 0"></p></section>
 </div><div id="libv" hidden><h2>Library</h2><div id="liblist"></div></div>
-<footer><span id="ver">v1.9</span></footer></main>
+<footer><span id="ver">v1.10</span></footer></main>
 <div id="log"><div class="p"><div class="h"><h2>What's new</h2><button id="th" class="ib" aria-label="Switch light or dark mode"><svg class="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/></svg></button></div>
-<ul><li><b>1.9</b> Highlights are removed automatically, and bars repeated at joins are detected by their bar numbers and removed.</li><li><b>1.8</b> Fixes doubled bars where two screens overlap and rows cut inside strum arrows. Tuning dropdown, capo wheel, saved highlight colours and a remembered save folder.</li><li><b>1.7</b> Every row is now drawn at the same size, and you can choose how many bars go in each row.</li><li><b>1.6</b> Review tools: select parts to recheck or join, and delete a segment from a row. Auto crop and remembered settings. Sensitivity markers and hints. Cleaner PDF with a footer logo. The screen stays awake while scanning.</li><li><b>1.5</b> Overlapping rows are joined and re-cut at bar lines. Tuning and capo on the PDF. Sharper output. Highlights now recolour instead of repaint. Fixed missing pages and darkened frames.</li><li><b>1.4</b> Title and source heading on the PDF, a save folder, a resizable frame box, a sharper preview, a clearer highlight remover and a larger circular icon.</li><li><b>1.3</b> Smarter stitching: rows break at bar lines, repeated pages are flagged, and a highlight or moving line can be removed by tapping it.</li><li><b>1.2</b> Now called folio, with a new look and logo. A library keeps every capture.</li><li><b>1.1</b> Scroll stitching: join tabs that scroll sideways or upward into rows or pages.</li><li><b>1.0</b> First version: pick a video, box the tab, auto-pick one clean frame per page, export PDF or one long image.</li></ul></div></div>
+<ul><li><b>1.10</b> Videos that jump between sections are now put in bar-number order and never mixed in one row. Removed highlights now match the page white.</li><li><b>1.9</b> Highlights are removed automatically, and bars repeated at joins are detected by their bar numbers and removed.</li><li><b>1.8</b> Fixes doubled bars where two screens overlap and rows cut inside strum arrows. Tuning dropdown, capo wheel, saved highlight colours and a remembered save folder.</li><li><b>1.7</b> Every row is now drawn at the same size, and you can choose how many bars go in each row.</li><li><b>1.6</b> Review tools: select parts to recheck or join, and delete a segment from a row. Auto crop and remembered settings. Sensitivity markers and hints. Cleaner PDF with a footer logo. The screen stays awake while scanning.</li><li><b>1.5</b> Overlapping rows are joined and re-cut at bar lines. Tuning and capo on the PDF. Sharper output. Highlights now recolour instead of repaint. Fixed missing pages and darkened frames.</li><li><b>1.4</b> Title and source heading on the PDF, a save folder, a resizable frame box, a sharper preview, a clearer highlight remover and a larger circular icon.</li><li><b>1.3</b> Smarter stitching: rows break at bar lines, repeated pages are flagged, and a highlight or moving line can be removed by tapping it.</li><li><b>1.2</b> Now called folio, with a new look and logo. A library keeps every capture.</li><li><b>1.1</b> Scroll stitching: join tabs that scroll sideways or upward into rows or pages.</li><li><b>1.0</b> First version: pick a video, box the tab, auto-pick one clean frame per page, export PDF or one long image.</li></ul></div></div>
 <div id="ed"><div class="p"><div class="h"><h2 id="edt">Review</h2><button class="ghost" id="edx">Done</button></div><div id="edw"><div id="edc"><canvas id="edv"></canvas><div id="sg" hidden><i id="hA"></i><i id="hB"></i></div></div></div><div class="two" style="margin-top:10px"><button class="ghost" id="edr" hidden>Undo edits</button><button id="edd" disabled>Delete segment</button></div></div></div>
 <div id="hl"><div class="p"><div class="h"><h2>Remove highlight</h2></div><p class="meta" id="hlmsg" style="margin:8px 0"></p><div id="hls" class="tools" style="margin:6px 0" hidden></div><canvas id="hlc" style="display:block;border-radius:10px;margin:0 auto 10px"></canvas><div class="row"><span>Strength</span><input id="hlt" type="range" min="8" max="60" value="25"></div><div class="two"><button class="ghost" id="hlx">Cancel</button><button id="hlok" disabled>Remove</button></div></div></div>
 <video id="v" muted playsinline preload="auto" style="position:fixed;width:2px;height:2px;opacity:0;pointer-events:none"></video>
@@ -108,9 +109,9 @@ const diff=(a,b)=>{let n=0;for(let i=0;i<a.length;i++)if(Math.abs(a[i]-b[i])>30)
 function medoid(seg){const c=seg.length>7?Array.from({length:7},(_,i)=>seg[Math.round(i*(seg.length-1)/6)]):seg;let best=c[0],bs=1e9;for(const a of c){let s=0;for(const b of c)if(a!==b)s+=diff(a.g,b.g);if(s<bs){bs=s;best=a}}return best}
 const prog=p=>$('#pb').style.width=Math.round(p*100)+'%';
 $('#go').onclick=async()=>{if(busy){stop=true;return}
-dupBars=0;SREF={bg:null};busy=true;stop=false;$('#go').textContent='Cancel';$('#s4').hidden=true;note='';keepAwake(true);askNotify();$('#msg').textContent='Preparing';await calibrate(V.duration);
+dupBars=0;secNote='';SREF={bg:null};busy=true;stop=false;$('#go').textContent='Cancel';$('#s4').hidden=true;note='';keepAwake(true);askNotify();$('#msg').textContent='Preparing';await calibrate(V.duration);
 const step=+$('#step').value,thr=.1/$('#sens').value,dur=V.duration,md=$('#mode').value;CFG={md,step,thr};PR=[0,1];saveSet();
-frames=await runScan(md,0,dur,step,thr);RAW=md=='pages'?frames:null;if(md=='pages'&&!stop)frames=pjoin(frames.slice());if(dupBars)note=(note?note+' ':'')+'Removed '+dupBars+' repeated '+(dupBars==1?'bar':'bars')+'.';
+frames=await runScan(md,0,dur,step,thr);RAW=md=='pages'?frames:null;if(md=='pages'&&!stop)frames=pjoin(frames.slice());if(secNote)note=(note?note+' ':'')+secNote;if(dupBars)note=(note?note+' ':'')+'Removed '+dupBars+' repeated '+(dupBars==1?'bar':'bars')+'.';
 if(!stop){dedupe();selS.clear();render();$('#s4').hidden=false;persist();$('#s4').scrollIntoView({behavior:'smooth'})}
 $('#msg').textContent=stop?'Cancelled.':note;busy=false;keepAwake(false);$('#go').textContent='Scan video';prog(0)};
 function grayN(d,n){const g=new Uint8Array(n);let m=0;for(let i=0;i<n;i++){g[i]=d[i*4]*.3+d[i*4+1]*.59+d[i*4+2]*.11;m+=g[i]}m/=n;for(let i=0;i<n;i++){const r=d[i*4],q=d[i*4+1],b=d[i*4+2];if(Math.max(r,q,b)-Math.min(r,q,b)>30)g[i]=m}return g}
@@ -120,10 +121,30 @@ function serr(A,B,m,ax,cs){const w=A.w,h=A.h,a=A.e,b=B.e;let n=0,d=0;
 if(ax=='x'){for(let y=0;y<h;y+=cs)for(let x=0;x<w-m;x++){const p=a[y*w+x+m],q=b[y*w+x];if(p|q){d++;if(p!==q)n++}}}
 else{for(let y=0;y<h-m;y++)for(let x=0;x<w;x+=cs){const p=a[(y+m)*w+x],q=b[y*w+x];if(p|q){d++;if(p!==q)n++}}}
 return d<15?-1:n/d}
-let ovl=[],SREF={bg:null},base=null,G=null,OVA=[],dupBars=0;
-function bgOf(d,n,m){const cn=new Uint32Array(4096),sr=new Float64Array(4096),sg=new Float64Array(4096),sb=new Float64Array(4096);
-for(let i=0;i<n;i+=3){if(m&&m[i])continue;const r=d[i*4],g=d[i*4+1],b=d[i*4+2],k=(r>>4)<<8|(g>>4)<<4|(b>>4);cn[k]++;sr[k]+=r;sg[k]+=g;sb[k]+=b}
-let bk=0;for(let k=1;k<4096;k++)if(cn[k]>cn[bk])bk=k;return cn[bk]?[sr[bk]/cn[bk],sg[bk]/cn[bk],sb[bk]/cn[bk]]:[255,255,255]}
+let ovl=[],SREF={bg:null},base=null,G=null,OVA=[],dupBars=0,secNote='';
+let TPL=null;
+function holes(m,w,h){const seen=new Uint8Array(w*h),st=[];const push=(x,y)=>{if(x<0||y<0||x>=w||y>=h)return;const p=y*w+x;if(m[p]||seen[p])return;seen[p]=1;st.push(p)};for(let x=0;x<w;x++){push(x,0);push(x,h-1)}for(let y=0;y<h;y++){push(0,y);push(w-1,y)}
+while(st.length){const p=st.pop(),x=p%w,y=(p/w)|0;push(x+1,y);push(x-1,y);push(x,y+1);push(x,y-1)}let n=0;for(let s0=0;s0<w*h;s0++){if(m[s0]||seen[s0])continue;n++;const q=[s0];seen[s0]=1;while(q.length){const p=q.pop(),x=p%w,y=(p/w)|0;for(const[dx,dy]of[[1,0],[-1,0],[0,1],[0,-1]]){const nx=x+dx,ny=y+dy;if(nx<0||ny<0||nx>=w||ny>=h)continue;const k=ny*w+nx;if(!m[k]&&!seen[k]){seen[k]=1;q.push(k)}}}}return n}
+function normGlyph(g,gw,gh){const t=cv(gw,gh),tx=t.getContext('2d'),im=tx.createImageData(gw,gh);for(let i=0;i<gw*gh;i++){const v=255-Math.round(255*Math.min(1,g[i]));im.data[i*4]=im.data[i*4+1]=im.data[i*4+2]=v;im.data[i*4+3]=255}tx.putImageData(im,0,0);
+const o=cv(12,18),ox=o.getContext('2d');ox.fillStyle='#fff';ox.fillRect(0,0,12,18);ox.imageSmoothingQuality='high';const sw=Math.min(12,Math.max(3,Math.round(gw*18/gh)));ox.drawImage(t,0,0,gw,gh,Math.round((12-sw)/2),0,sw,18);
+const d=ox.getImageData(0,0,12,18).data,r=new Float32Array(216);let s=0;for(let i=0;i<216;i++){r[i]=1-d[i*4]/255;s+=r[i]*r[i]}s=Math.sqrt(s)||1;for(let i=0;i<216;i++)r[i]/=s;return r}
+function getTpl(){if(TPL)return TPL;TPL=[];for(const fam of['sans-serif','Arial, Helvetica, sans-serif','Roboto, sans-serif','Verdana, sans-serif','Georgia, serif']){for(let d=0;d<10;d++){const c=cv(60,70),x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,60,70);x.fillStyle='#000';x.font='48px '+fam;x.textBaseline='top';x.fillText(String(d),8,6);
+const id=x.getImageData(0,0,60,70).data;let x0=60,x1=-1,y0=70,y1=-1;for(let y=0;y<70;y++)for(let q=0;q<60;q++)if(id[(y*60+q)*4]<140){if(q<x0)x0=q;if(q>x1)x1=q;if(y<y0)y0=y;if(y>y1)y1=y}if(x1<0)continue;const gw=x1-x0+1,gh=y1-y0+1,g=new Float32Array(gw*gh);for(let y=0;y<gh;y++)for(let q=0;q<gw;q++)g[y*gw+q]=1-id[((y+y0)*60+q+x0)*4]/255;{const bm=new Uint8Array(gw*gh);for(let i=0;i<gw*gh;i++)bm[i]=g[i]>.45?1:0;TPL.push({d,g:normGlyph(g,gw,gh),ho:holes(bm,gw,gh)})}}}return TPL}
+function classify(g,ho){let best=-9,bd=-1,raw=0;for(const t of getTpl()){let s=0;for(let i=0;i<216;i++)s+=g[i]*t.g[i];const sc=s-(ho!=null&&t.ho!==ho?.07:0);if(sc>best){best=sc;bd=t.d;raw=s}}return{d:bd,s:raw}}
+function readNumAt(cx,len,cl,i){if(cl.y0<0)return null;const lm=(d,k)=>d[k]*.3+d[k+1]*.59+d[k+2]*.11,x0=cl[i].b+2,w=64,ya=Math.max(0,cl.y0-34),h=cl.y0-3-ya;if(h<10||x0+w>len)return null;
+const d=cx.getImageData(x0,ya,w,h).data;let mean=0;for(let k=0;k<d.length;k+=4)mean+=lm(d,k);mean/=w*h;const dev=new Float32Array(w*h),m=new Uint8Array(w*h);let mx=1;
+for(let k=0;k<w*h;k++){const r=d[k*4],g=d[k*4+1],b=d[k*4+2];dev[k]=Math.abs(lm(d,k*4)-mean);if(dev[k]>mx)mx=dev[k];m[k]=dev[k]>28&&Math.max(r,g,b)-Math.min(r,g,b)<50?1:0}
+const lab=new Int16Array(w*h).fill(-1),comps=[];for(let s=0;s<w*h;s++){if(!m[s]||lab[s]>=0)continue;const st=[s],id=comps.length;lab[s]=id;let x1=w,x2=-1,y1=h,y2=-1,cnt=0;
+while(st.length){const p=st.pop(),px=p%w,py=(p/w)|0;cnt++;if(px<x1)x1=px;if(px>x2)x2=px;if(py<y1)y1=py;if(py>y2)y2=py;for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){const nx=px+dx,ny=py+dy;if(nx<0||ny<0||nx>=w||ny>=h)continue;const q=ny*w+nx;if(m[q]&&lab[q]<0){lab[q]=id;st.push(q)}}}comps.push({x1,x2,y1,y2,cnt,id})}
+const cand=comps.filter(c=>c.y2-c.y1>=4&&c.y2-c.y1<=18&&c.x2-c.x1<=13).sort((a,b)=>a.x1-b.x1);if(!cand.length||cand[0].x1>12)return null;
+const sel=[cand[0]];for(let j=1;j<cand.length&&sel.length<3;j++){const p=sel[sel.length-1],c=cand[j];if(c.x1-p.x2>5)break;if(Math.abs(c.y2-p.y2)<=3&&Math.abs((c.y2-c.y1)-(p.y2-p.y1))<=3)sel.push(c)}
+let dig='',ms=9;for(const c of sel){const gw=c.x2-c.x1+1,gh=c.y2-c.y1+1,g=new Float32Array(gw*gh);for(let y=0;y<gh;y++)for(let q=0;q<gw;q++){const p=(y+c.y1)*w+q+c.x1;if(lab[p]===c.id)g[y*gw+q]=Math.min(1,dev[p]/mx)}const bm=new Uint8Array(gw*gh);for(let i=0;i<gw*gh;i++)bm[i]=g[i]>.45?1:0;const r=classify(normGlyph(g,gw,gh),Math.min(2,holes(bm,gw,gh)));dig+=r.d;if(r.s<ms)ms=r.s}
+return ms>=.72?{n:+dig,s:ms}:null}
+function sideBg(d,w,a,b,ya,yb,m,bg){const H=[new Uint32Array(256),new Uint32Array(256),new Uint32Array(256)],gl=bg[0]*.3+bg[1]*.59+bg[2]*.11;let n=0;
+for(let y=ya;y<=yb;y++)for(const[xa,xb]of[[a-14,a-3],[b+3,b+14]])for(let k=Math.max(0,xa);k<=Math.min(w-1,xb);k++){const i=y*w+k;if(m[i])continue;const r=d[i*4],g=d[i*4+1],bl=d[i*4+2];if(Math.abs(r*.3+g*.59+bl*.11-gl)>25)continue;H[0][r]++;H[1][g]++;H[2][bl]++;n++}
+return n<60?bg:H.map(modeOf)}
+function modeOf(h){let b=0,bs=-1;for(let v=0;v<256;v++){const s=(h[v-1]||0)+h[v]+(h[v+1]||0);if(s>bs){bs=s;b=v}}let sw=0,sn=0;for(let v=Math.max(0,b-1);v<=Math.min(255,b+1);v++){sw+=v*h[v];sn+=h[v]}return sn?sw/sn:255}
+function bgOf(d,n,m){const H=[new Uint32Array(256),new Uint32Array(256),new Uint32Array(256)];for(let i=0;i<n;i+=3){if(m&&m[i])continue;H[0][d[i*4]]++;H[1][d[i*4+1]]++;H[2][d[i*4+2]]++}return H.map(modeOf)}
 function clean(c,ref){const L=ovl.concat(OVA),x=c.getContext('2d'),im=x.getImageData(0,0,c.width,c.height),d=im.data,w=c.width,h=c.height,n=w*h;let m=null;
 if(L.length){m=new Uint8Array(n);let mc=0;for(let i=0;i<n;i++){const k=ovHit(L,d[i*4],d[i*4+1],d[i*4+2]);if(k){m[i]=k;mc++}}if(mc>.9*n||mc<8)m=null}
 const bg=bgOf(d,n,m);
@@ -134,11 +155,12 @@ if(cnt<30)continue;for(let k=0;k<w;k++)if(cc[k]>mxc)mxc=cc[k];
 const tc=Math.max(4,.25*mxc),iv=[];let s0=-1,last=-99;for(let k=0;k<w;k++){if(cc[k]>=tc){if(s0<0)s0=k;last=k}else if(s0>=0&&k-last>12){iv.push([s0,last]);s0=-1}}if(s0>=0)iv.push([s0,last]);
 for(const[a,b]of iv){const rc=new Uint32Array(h);let mxr=0;for(let y=0;y<h;y++){let t=0;for(let k=a;k<=b;k++)if(m[y*w+k]===q)t++;rc[y]=t;if(t>mxr)mxr=t}
 const tr=Math.max(3,.25*mxr);let ya=-1,yb=-1;for(let y=0;y<h;y++)if(rc[y]>=tr){if(ya<0)ya=y;yb=y}if(ya<0)continue;
-const hist=[new Uint32Array(256),new Uint32Array(256),new Uint32Array(256)],hh=[0,0,0];let np=0,nm=0;
-for(let y=ya;y<=yb;y++)for(let k=a;k<=b;k++){const i=y*w+k;np++;hist[0][d[i*4]]++;hist[1][d[i*4+1]]++;hist[2][d[i*4+2]]++;if(m[i]===q){hh[0]+=d[i*4];hh[1]+=d[i*4+1];hh[2]+=d[i*4+2];nm++}}
-if(!nm)continue;const hi=hh.map(v=>v/nm),lo=hist.map(H=>{let ac=0;const t=.002*np;for(let v=0;v<256;v++){ac+=H[v];if(ac>=t)return v}return 0});
+const hist=[new Uint32Array(256),new Uint32Array(256),new Uint32Array(256)],hm=[new Uint32Array(256),new Uint32Array(256),new Uint32Array(256)];let np=0,nm=0;
+for(let y=ya;y<=yb;y++)for(let k=a;k<=b;k++){const i=y*w+k;np++;hist[0][d[i*4]]++;hist[1][d[i*4+1]]++;hist[2][d[i*4+2]]++;if(m[i]===q){hm[0][d[i*4]]++;hm[1][d[i*4+1]]++;hm[2][d[i*4+2]]++;nm++}}
+if(!nm)continue;const hi=hm.map(modeOf),lo=hist.map(H=>{let ac=0;const t=.002*np;for(let v=0;v<256;v++){ac+=H[v];if(ac>=t)return v}return 0});
 if(.3*lo[0]+.59*lo[1]+.11*lo[2]>140){lo[0]=lo[1]=lo[2]=0}
-for(let y=ya;y<=yb;y++)for(let k=a;k<=b;k++){const i=y*w+k;for(let ch=0;ch<3;ch++){const v=(d[i*4+ch]-lo[ch])/Math.max(20,hi[ch]-lo[ch])*bg[ch];d[i*4+ch]=v<0?0:v>255?255:v}}}}
+const tb=sideBg(d,w,a,b,ya,yb,m,bg);
+for(let y=ya;y<=yb;y++)for(let k=a;k<=b;k++){const i=y*w+k;for(let ch=0;ch<3;ch++){const v=(d[i*4+ch]-lo[ch])/Math.max(20,hi[ch]-lo[ch])*tb[ch];d[i*4+ch]=v<0?0:v>255?255:v}}}}
 const T=Math.max(6,Math.round(w/100)),hasL=L.some(o=>o.k=='line');let rh,rv;
 if(hasL){const m2=m.slice();for(let y=0;y<h;y++)for(let k=0;k<w;k++){const i=y*w+k,q=m[i];if(q&&L[q-1].k=='line'){if(k>0&&!m2[i-1])m2[i-1]=q;if(k<w-1&&!m2[i+1])m2[i+1]=q;if(y>0&&!m2[i-w])m2[i-w]=q;if(y<h-1&&!m2[i+w])m2[i+w]=q}}m=m2;
 rh=new Uint16Array(n);rv=new Uint16Array(n);
@@ -202,8 +224,8 @@ for(let x=0;x<n;x++){let ru=0,best=0;const ya=staff?y0:0,yb=staff?y1:H-1;for(let
 if(best<th)continue;
 if(staff){let ext=0;for(let y=Math.max(0,y0-10);y<y0-3;y++)if(ink((y*n+x)*4))ext++;for(let y=y1+4;y<=Math.min(H-1,y1+10);y++)if(ink((y*n+x)*4))ext++;if(ext>3)continue}
 const l=cl[cl.length-1];if(l&&x+off-l.b<=12)l.b=x+off;else cl.push({a:x+off,b:x+off})}cl.y0=staff?y0:-1;cl.y1=staff?y1:-1;return cl}
-function Strip(X,Wc,Hc){const N=X?(+$('#bpr').value||0):0,P=X?Math.max(600,Wc):Math.round(Wc*3228/2200),CAP=Math.min(16000,Math.floor(16e6/(X?Hc:Wc))),SC=cv(X?CAP:Wc,X?Hc:CAP),ctx=SC.getContext('2d'),lm=(d,i)=>d[i]*.3+d[i+1]*.59+d[i+2]*.11;let len=0,np=0,marks=[];const out=[];
-const add=(c,t0,t1)=>{const a=X?c.width:c.height;if(len+a>CAP)flush(false);ctx.drawImage(c,X?len:0,X?0:len);marks.push({s:len,e:len+a,t0,t1});len+=a};
+function Strip(X,Wc,Hc){const N=X?(+$('#bpr').value||0):0,P=X?Math.max(600,Wc):Math.round(Wc*3228/2200),CAP=Math.min(16000,Math.floor(16e6/(X?Hc:Wc))),SC=cv(X?CAP:Wc,X?Hc:CAP),ctx=SC.getContext('2d'),lm=(d,i)=>d[i]*.3+d[i+1]*.59+d[i+2]*.11;let len=0,np=0,marks=[],brks=[],secOff=0,flushed=false;const out=[];
+const add=(c,t0,t1,brk)=>{const a=X?c.width:c.height;if(len+a>CAP)flush(false);if(brk&&len>0)brks.push(len);ctx.drawImage(c,X?len:0,X?0:len);marks.push({s:len,e:len+a,t0,t1});len+=a};
 function cutAt(pos){
 if(X){const bs=pos+Math.floor(P*.4),bn=pos+P-bs,d=ctx.getImageData(bs,0,bn,Hc).data,cl=barCl(d,bn,Hc,bs);
 for(let i=cl.length-1;i>=0;i--)if(cl[i].b+3<=pos+P)return{end:cl[i].b+3,next:cl[i].a-3}}
@@ -216,34 +238,56 @@ function numEq(A,B){if(!A||!B||A.n<8||B.n<8)return false;let best=1;for(let dy=-
 function dedupeBars(cl){const rm=[];let i=0;while(i+2<cl.length){let j=i+1;while(j+1<cl.length&&cl[i+1].a-cl[i].b>=80&&cl[j+1].a-cl[j].b>=80&&numEq(numMap(cl,i),numMap(cl,j))&&jac(barSig(SC,cl[i].b+1,cl[i+1].a),barSig(SC,cl[j].b+1,cl[j+1].a))<.5){rm.push([cl[j].a,cl[j+1].a]);j++}i=j}return rm}
 function removeRanges(rs){const src=cv(len,Hc);src.getContext('2d').drawImage(SC,0,0,len,Hc,0,0,len,Hc);const keep=[];let p=0;for(const[a,b]of rs){keep.push([p,a]);p=b}keep.push([p,len]);let off=0;ctx.clearRect(0,0,SC.width,SC.height);
 for(const[a,b]of keep)if(b>a){ctx.drawImage(src,a,0,b-a,Hc,off,0,b-a,Hc);off+=b-a}
-const sh=x=>{let s=0;for(const[a,b]of rs){if(x>=b)s+=b-a;else if(x>a)s+=x-a}return x-s};marks=marks.map(m=>({...m,s:sh(m.s),e:sh(m.e)})).filter(m=>m.e>m.s);len=off;dupBars+=rs.length}
+const sh=x=>{let s=0;for(const[a,b]of rs){if(x>=b)s+=b-a;else if(x>a)s+=x-a}return x-s};marks=marks.map(m=>({...m,s:sh(m.s),e:sh(m.e)})).filter(m=>m.e>m.s);brks=brks.map(sh).filter((q,i,a)=>q>0&&q<off&&(i==0||q!==a[i-1]));len=off;dupBars+=rs.length}
+function reorder(cl){if(!X||cl.y0<0||!brks.length)return 0;const B=[0,...brks,len],secs=[];
+for(let k=0;k+1<B.length;k++){let idx=[];cl.forEach((c,i)=>{if(c.a>=B[k]-4&&c.a<B[k+1]-4)idx.push(i)});if(idx.length<2)return -1;
+{const sp=[];for(let q=1;q<idx.length;q++)sp.push(cl[idx[q]].a-cl[idx[q-1]].a);const md=[...sp].sort((a,b)=>a-b)[sp.length>>1];if(sp[0]<.6*md)idx=idx.slice(1);if(idx.length>1&&sp[sp.length-1]<.6*md)idx=idx.slice(0,-1);if(idx.length<2)return -1}
+
+const nums=idx.map(i=>{const r=readNumAt(ctx,len,cl,i);return r?r.n:null}),v=new Map();let tot=0;nums.forEach((n,j)=>{if(n==null)return;tot++;v.set(n-j,(v.get(n-j)||0)+1)});if(tot<2)return -1;
+let o=null,bc=0;for(const[k2,c]of v)if(c>bc){bc=c;o=k2}if(bc<Math.max(2,Math.ceil(.8*tot)))return -1;
+const mk=marks.filter(m=>m.e>B[k]&&m.s<B[k+1]&&m.t0!=null);secs.push({k,cs:idx.map(i=>cl[i]),o,s:B[k],e:B[k+1],t0:mk.length?Math.min(...mk.map(m=>m.t0)):undefined,t1:mk.length?Math.max(...mk.map(m=>m.t1)):undefined})}
+const full=new Map(),pl=new Map(),pt=new Map();
+for(const S of secs){const m=S.cs.length;for(let j=0;j+1<m;j++){const n=S.o+j;if(!full.has(n))full.set(n,{x0:S.cs[j].a,x1:S.cs[j+1].a,c0:S.cs[j+1].a,c1:S.cs[j+1].b+1,S})}
+if(S.cs[0].a-S.s>24&&!pl.has(S.o-1))pl.set(S.o-1,{x0:S.s,x1:S.cs[0].a,S});if(S.e-S.cs[m-1].a>24&&!pt.has(S.o+m-1))pt.set(S.o+m-1,{x0:S.cs[m-1].a,x1:S.e,S})}
+const nums=[...full.keys()].sort((a,b)=>a-b);if(!nums.length)return -1;const parts=[];let prev=null,pend=false;
+const push=(x0,x1,S)=>{parts.push({x0,x1,S,brk:pend});pend=false};
+const closeRun=n=>{if(!full.has(n+1)&&pt.has(n+1)){const t=pt.get(n+1);push(t.x0,t.x1,t.S)}else{const f=full.get(n);push(f.c0,f.c1,f.S)}};
+for(const n of nums){const f=full.get(n);if(prev===null||n!==prev+1){if(prev!==null){closeRun(prev);pend=true}if(!full.has(n-1)&&pl.has(n-1)){const l=pl.get(n-1);push(l.x0,l.x1,l.S)}}push(f.x0,f.x1,f.S);prev=n}closeRun(prev);
+const tot=parts.reduce((a,p)=>a+p.x1-p.x0,0);if(tot<=0||tot>CAP)return -1;
+const T=cv(tot,Hc),tx=T.getContext('2d'),nm=[],nb=[];let off=0;for(const p of parts){if(p.brk&&off>0)nb.push(off);tx.drawImage(SC,p.x0,0,p.x1-p.x0,Hc,off,0,p.x1-p.x0,Hc);nm.push({s:off,e:off+p.x1-p.x0,t0:p.S.t0,t1:p.S.t1});off+=p.x1-p.x0}
+ctx.clearRect(0,0,SC.width,SC.height);ctx.drawImage(T,0,0);len=off;marks=nm;brks=nb;return secs.length}
+
 function cutBars(cl,pos,fin){const f=cl.findIndex(c=>c.b>=pos);if(f<0)return fin?{end:len,next:len}:null;const ws=[];for(let i=1;i<cl.length;i++)ws.push(cl[i].a-cl[i-1].a);ws.sort((p,q)=>p-q);const bw=ws.length?ws[ws.length>>1]:0,atBar=cl[f].a-pos<=8||cl[f].a-pos<.3*bw,need=atBar?f+N:f+N-1;
 if(need>=cl.length)return fin?{end:len,next:len}:null;const c=cl[need];return{end:Math.min(len,c.b+3),next:c.a-3}}
 function piece(pos,end){const c=cv(X?Math.max(P,end-pos):Wc,X?Hc:P),x=c.getContext('2d'),p=ctx.getImageData(X?pos:0,X?0:pos,1,1).data;x.fillStyle='rgb('+p[0]+','+p[1]+','+p[2]+')';x.fillRect(0,0,c.width,c.height);
 if(X)x.drawImage(SC,pos,0,end-pos,Hc,0,0,end-pos,Hc);else x.drawImage(SC,0,pos,Wc,end-pos,0,0,Wc,end-pos);
-const mk=marks.filter(m=>m.e>pos&&m.s<end&&m.t0!=null),t0=mk.length?Math.min(...mk.map(m=>m.t0)):undefined,t1=mk.length?Math.max(...mk.map(m=>m.t1)):undefined;out.push({label:'Part '+(++np),ax:X?'x':'y',c,keep:true,t:t0,t0,t1})}
+const mk=marks.filter(m=>m.e>pos&&m.s<end&&m.t0!=null),t0=mk.length?Math.min(...mk.map(m=>m.t0)):undefined,t1=mk.length?Math.max(...mk.map(m=>m.t1)):undefined;out.push({label:'Part '+(++np),ax:X?'x':'y',c,keep:true,t:t0,t0,t1,sec:secOff+brks.filter(q=>q<=pos+2).length})}
 function flush(fin){let cl=X&&len>0?barCl(ctx.getImageData(0,0,len,Hc).data,len,Hc,0):null;
+if(fin&&!flushed&&X&&brks.length&&cl&&cl.y0>=0&&$('#secsort').checked){const r=reorder(cl);if(r>0){secNote='Found '+r+' sections where the video jumped and put them in bar-number order.';cl=len>0?barCl(ctx.getImageData(0,0,len,Hc).data,len,Hc,0):null}else if(r<0)secNote='The video jumps between sections but the bar numbers could not be read reliably, so rows follow video order.'}
 if(cl&&cl.length>2&&cl.y0>=0){const rs=dedupeBars(cl);if(rs.length){removeRanges(rs);cl=len>0?barCl(ctx.getImageData(0,0,len,Hc).data,len,Hc,0):null}}
 if(!N)cl=null;let pos=0;
 let bwv=0;if(cl){const ws=[];for(let i=1;i<cl.length;i++)ws.push(cl[i].a-cl[i-1].a);ws.sort((p,q)=>p-q);bwv=ws.length?ws[ws.length>>1]:0}
-while(len-pos>3&&(fin||len-pos>=P)&&!(cl&&fin&&pos>0&&len-pos<.5*bwv)){let end,nx;if(cl){const r=cutBars(cl,pos,fin);if(!r)break;end=r.end;nx=r.next}else if(len-pos>=P){const r=cutAt(pos);end=r.end;nx=r.next}else end=nx=len;if(nx<=pos)nx=end;piece(pos,end);pos=nx}
-if(fin){len=0;return}if(pos>0){const rem=len-pos,t=cv(SC.width,SC.height);t.getContext('2d').drawImage(SC,0,0);ctx.clearRect(0,0,SC.width,SC.height);
+while(len-pos>3&&(fin||len-pos>=P)&&!(cl&&fin&&pos>0&&len-pos<.5*bwv)){let end,nx;if(cl){const r=cutBars(cl,pos,fin);if(!r)break;end=r.end;nx=r.next}else if(len-pos>=P){const r=cutAt(pos);end=r.end;nx=r.next}else end=nx=len;if(nx<=pos)nx=end;const nbk=brks.find(q=>q>pos+10&&q<end-2);if(nbk){end=nbk;nx=nbk}piece(pos,end);pos=nx}
+if(fin){len=0;return}flushed=true;if(pos>0){secOff+=brks.filter(q=>q<=pos).length;brks=brks.filter(q=>q>pos).map(q=>q-pos);const rem=len-pos,t=cv(SC.width,SC.height);t.getContext('2d').drawImage(SC,0,0);ctx.clearRect(0,0,SC.width,SC.height);
 if(X)ctx.drawImage(t,pos,0,rem,Hc,0,0,rem,Hc);else ctx.drawImage(t,0,pos,Wc,rem,0,0,Wc,rem);len=rem;marks=marks.filter(m=>m.e>pos).map(m=>({...m,s:m.s-pos,e:m.e-pos}))}}
 return{add,cut(n){len=Math.max(0,len-n);marks=marks.filter(m=>m.s<len).map(m=>({...m,e:Math.min(m.e,len)}))},done(){flush(true);return out}}}
 function barSeg(c){const w=c.width,h=c.height,cl=barCl(c.getContext('2d').getImageData(0,0,w,h).data,w,h,0),segs=[];for(let i=0;i+1<cl.length;i++)segs.push({a:cl[i].b+1,b:cl[i+1].a,close:cl[i+1]});return{cl,segs}}
 function barSig(c,a,b){const t=cv(80,32),x=t.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,80,32);x.imageSmoothingQuality='high';x.drawImage(c,a,0,Math.max(1,b-a),c.height,0,0,80,32);const d=x.getImageData(0,0,80,32).data,l=new Float32Array(2560),e=new Uint8Array(2560);let m=0;
 for(let i=0;i<2560;i++){l[i]=d[i*4]*.3+d[i*4+1]*.59+d[i*4+2]*.11;m+=l[i]}m/=2560;for(let i=0;i<2560;i++)e[i]=Math.abs(l[i]-m)>35?1:0;return e}
 const jac=(a,b)=>{let o=0,x=0;for(let i=0;i<a.length;i++){if(a[i]|b[i]){o++;if(a[i]!==b[i])x++}}return o?x/o:1};
-function seamTrim(A,B){const sa=barSeg(A),sb=barSeg(B);if(!sa.segs.length||!sb.segs.length)return null;const sg=(c,g)=>g.sig||(g.sig=barSig(c,g.a,g.b));
-for(let k=Math.min(3,sa.segs.length,sb.segs.length);k>=1;k--){let ok=true;for(let j=0;j<k;j++){const ga=sa.segs[sa.segs.length-k+j],gb=sb.segs[j];if(Math.abs((ga.b-ga.a)-(gb.b-gb.a))>14||jac(sg(A,ga),sg(B,gb))>.4){ok=false;break}}
+function seamTrim(A,B){const sa=barSeg(A),sb=barSeg(B);if(!sa.segs.length||!sb.segs.length)return null;const sg=(c,g)=>g.sig||(g.sig=barSig(c,g.a,g.b)),ca=A.getContext('2d'),cb=B.getContext('2d');
+for(let k=Math.min(3,sa.segs.length,sb.segs.length);k>=1;k--){let ok=true;for(let j=0;j<k;j++){const ga=sa.segs[sa.segs.length-k+j],gb=sb.segs[j];if(Math.abs((ga.b-ga.a)-(gb.b-gb.a))>14||jac(sg(A,ga),sg(B,gb))>.4){ok=false;break}const ra=readNumAt(ca,A.width,sa.cl,sa.segs.length-k+j),rb=readNumAt(cb,B.width,sb.cl,j);if(ra&&rb&&ra.n!==rb.n){ok=false;break}}
 if(ok)return{cutA:A.width-(sa.segs[sa.segs.length-1].close.b+1),startB:sb.segs[k-1].close.b+1,k}}return null}
 const cropL=(c,x)=>{const o=cv(Math.max(1,c.width-x),c.height);o.getContext('2d').drawImage(c,x,0,o.width,c.height,0,0,o.width,c.height);return o};
+function numOK(A,B,m){const wa=barSeg(A),wb=barSeg(B),ca=A.getContext('2d'),cb=B.getContext('2d');let ck=0;
+for(let i=0;i<wb.cl.length&&ck<3;i++){const xb=wb.cl[i].a,xa=xb+m;if(xa+74>A.width||xb+74>B.width)continue;let j=-1;for(let q=0;q<wa.cl.length;q++)if(Math.abs(wa.cl[q].a-xa)<=8){j=q;break}if(j<0)continue;
+const rb=readNumAt(cb,B.width,wb.cl,i),ra=readNumAt(ca,A.width,wa.cl,j);if(ra&&rb){ck++;if(ra.n!==rb.n)return false}}return true}
 function joinRows(list){const W=list[0].c.width,H=list[0].c.height,st=Strip(true,W,H);let ref=null,joins=0,dups=0,seams=0;
 for(const f of list){const sm=cv(300,Math.max(8,Math.round(300*H/W))),sx=sm.getContext('2d');sx.imageSmoothingQuality='high';sx.drawImage(f.c,0,0,sm.width,sm.height);const cur={FE:edges(f.c,'x',40),CE:edges(sm,'x',18),c:f.c},t0=f.t0??f.t,t1=f.t1??f.t;
-if(ref){const r=estShift(ref,cur,true,0,.93,.7);if(r.be!==2&&r.be<=.7&&r.fe!==2&&r.fe<=.45){if(r.fm>=W*.05){st.add(slab(f.c,r.fm,true),t0,t1);joins++}else dups++;ref=cur;continue}
+if(ref){const r=estShift(ref,cur,true,0,.93,.7);if(r.be!==2&&r.be<=.7&&r.fe!==2&&r.fe<=.45&&numOK(ref.c,f.c,r.fm)){if(r.fm>=W*.05){st.add(slab(f.c,r.fm,true),t0,t1);joins++}else dups++;ref=cur;continue}
 const t=seamTrim(ref.c,f.c);if(t){st.cut(t.cutA);st.add(cropL(f.c,t.startB),t0,t1);seams++;ref=cur;continue}}
-st.add(f.c,t0,t1);ref=cur}return{rows:st.done(),joins,dups,seams}}
-function pjoin(list){if(list.length<2||list[0].ax||crop.w*V.videoWidth/(crop.h*V.videoHeight)<2.2)return list;const r=joinRows(list);if(r.joins+r.seams>=1&&r.joins+r.dups+r.seams>=Math.floor((list.length-1)*.6)){note='Joined '+(r.joins+r.seams)+' overlapping rows into '+r.rows.length+' rows.';return r.rows}return list}
+st.add(f.c,t0,t1,!!ref);ref=cur}return{rows:st.done(),joins,dups,seams}}
+function pjoin(list){if(list.length<2||list[0].ax||crop.w*V.videoWidth/(crop.h*V.videoHeight)<2.2)return list;const r=joinRows(list);if(r.joins+r.seams>=1){note='Joined '+(r.joins+r.seams)+' overlapping rows into '+r.rows.length+' rows.';return r.rows}return list}
 let PR=[0,1],CFG=null,RAW=null;
 async function scanPages(a,b,step,thr){const S=[];
 for(let t=a;t<b&&!stop;t+=step){await seek(t);const c=grab(320);clean(c,SREF);const d=c.getContext('2d').getImageData(0,0,c.width,c.height).data,g=grayN(d,c.width*c.height);S.push({t,g});prog(PR[0]+(PR[1]-PR[0])*.8*(t-a)/(b-a));$('#msg').textContent='Scanning '+fmt(t)+' of '+fmt(b)}
@@ -261,7 +305,7 @@ for(let t=a;t<b&&!stop;t+=step){await seek(t);const F=gk(kf),Cc=gk(kc),gn=clean(
 const cur={FE:edges(F,ax,40),CE:edges(Cc,ax,18),t,c:F};
 if(!ref){st.add(F,t,t);ref=cur;continue}
 const r=estShift(ref,cur,X,vel>0?vel*(t-ref.t):0,.75);
-if(r.be===2)continue;if(r.be>.5){let c2=F;if(X&&ref.c){const q=seamTrim(ref.c,F);if(q){st.cut(q.cutA);c2=cropL(F,q.startB)}}st.add(c2,t,t);ref=cur;vel=0;jumps++;continue}
+if(r.be===2)continue;if(r.be>.5){let c2=F,q=null;if(X&&ref.c){q=seamTrim(ref.c,F);if(q){st.cut(q.cutA);c2=cropL(F,q.startB)}}st.add(c2,t,t,!q);ref=cur;vel=0;jumps++;continue}
 if(r.fe===2||r.fe>.4||r.fm<3)continue;
 st.add(slab(F,r.fm,X),t,t);const v=r.fm/(t-ref.t);vel=vel?vel*.5+v*.5:v;ref=cur}
 const rows=st.done();if(jumps)note=jumps+(jumps==1?' jump':' jumps')+' where the picture changed suddenly. Check those spots.';return rows}
@@ -270,10 +314,10 @@ $('#mode').onchange=()=>{$('#pgopts').hidden=$('#mode').value!='pages'};
 const fmt=t=>Math.floor(t/60)+':'+String(Math.floor(t%60)).padStart(2,'0');
 const selS=new Set();
 function render(){const g=$('#grid');g.innerHTML='';for(const f of[...selS])if(!frames.includes(f))selS.delete(f);
-frames.forEach(f=>{const d=document.createElement('div');d.className='card'+(f.keep?'':' off')+(selS.has(f)?' sel':'');f.c.style.cursor='pointer';f.c.onclick=()=>openEd(f);
+frames.forEach((f,fi)=>{const d=document.createElement('div');d.className='card'+(f.keep?'':' off')+(selS.has(f)?' sel':'');f.c.style.cursor='pointer';f.c.onclick=()=>openEd(f);
 const ck=document.createElement('button');ck.className='ck'+(selS.has(f)?' on':'');ck.setAttribute('aria-label','Select');ck.onclick=()=>{selS.has(f)?selS.delete(f):selS.add(f);render()};
 const b=document.createElement('button');b.className='ghost';b.textContent=f.keep?'Remove':'Restore';b.onclick=()=>{f.keep=!f.keep;render();saveKeeps()};
-const m=document.createElement('div'),l=document.createElement('span'),t=document.createElement('span');l.style.cssText='display:flex;align-items:center';t.textContent=(f.label||fmt(f.t))+(f.dup?' (repeat)':'')+(f.chk?' (rechecked)':'');l.append(ck,t);m.append(l,b);d.append(f.c,m);g.append(d)});
+const m=document.createElement('div'),l=document.createElement('span'),t=document.createElement('span');l.style.cssText='display:flex;align-items:center';t.textContent=(f.label||fmt(f.t))+(f.dup?' (repeat)':'')+(f.chk?' (rechecked)':'')+(fi>0&&f.sec!=null&&frames[fi-1].sec!=null&&f.sec!==frames[fi-1].sec?' · new section':'');l.append(ck,t);m.append(l,b);d.append(f.c,m);g.append(d)});
 const n=frames.filter(f=>f.keep).length;$('#cnt').textContent=n?n+(n==1?' page found':' pages found'):'No pages found';$('#rf').hidden=!frames.some(f=>f.ax=='x');updSel()}
 function updSel(){const n=selS.size,L=frames.filter(f=>selS.has(f));$('#selbar').hidden=!n;$('#selc').textContent=n+' selected';$('#rc').disabled=busy||fromEntry||!V.videoWidth||!CFG;$('#jn').disabled=n<2||!(L.every(f=>f.ax=='x')||L.every(f=>!f.ax))}
 function relabel(){let n=0;if(frames.some(f=>f.label))frames.forEach(f=>{if(f.label)f.label='Part '+(++n)})}
@@ -302,7 +346,7 @@ edv.onclick=e=>{if(ef.ax=='y')return;const x=e.clientX-edv.getBoundingClientRect
 [[$('#hA'),0],[$('#hB'),1]].forEach(([h,w2])=>{h.onpointerdown=e=>{h.setPointerCapture(e.pointerId);h.dataset.d=1;e.stopPropagation()};h.onpointermove=e=>{if(!h.dataset.d)return;const x=Math.max(0,Math.min(edv.clientWidth,e.clientX-edv.getBoundingClientRect().left));w2?edSel(sa,x):edSel(x,sb2)};h.onpointerup=h.onpointercancel=()=>{delete h.dataset.d}});
 $('#edd').onclick=()=>{const a=Math.round(sa/sc2),b=Math.round(sb2/sc2),c=ef.c;if(b-a<4)return;if(!ef.orig)ef.orig=c;const n=cv(c.width-(b-a),c.height),x=n.getContext('2d');x.drawImage(c,0,0,a,c.height,0,0,a,c.height);x.drawImage(c,b,0,c.width-b,c.height,a,0,c.width-b,c.height);ef.c=n;edView();render();resave()};
 $('#edr').onclick=()=>{if(ef.orig){ef.c=ef.orig;ef.orig=null;edView();render();resave()}};$('#edx').onclick=()=>ed.classList.remove('on');
-async function resave(){if(!cm)return;try{const parts=[];for(const f of frames)parts.push({label:f.label,t:f.t,t0:f.t0,t1:f.t1,ax:f.ax,dup:f.dup,blob:await bl(f.c)});cm.keeps=frames.map(f=>f.keep);cm.count=frames.length;
+async function resave(){if(!cm)return;try{const parts=[];for(const f of frames)parts.push({label:f.label,t:f.t,t0:f.t0,t1:f.t1,ax:f.ax,dup:f.dup,sec:f.sec,blob:await bl(f.c)});cm.keeps=frames.map(f=>f.keep);cm.count=frames.length;
 if(frames[0]){const th=cv(240,Math.max(8,Math.round(240*frames[0].c.height/frames[0].c.width)));th.getContext('2d').drawImage(frames[0].c,0,0,th.width,th.height);cm.thumb=th.toDataURL('image/jpeg',.7)}
 await dbp(['caps','blobs'],'readwrite',(a,b)=>{a.put(cm);b.put({id:cm.id,parts})})}catch(e){}}
 async function persist(){fromEntry=false;cm=null;$('#ttl').value=vname;$('#src').value='';setTun('');setCap(0);if(!frames.length)return;cm={id:String(Date.now()),name:vname,title:vname,src:'',tun:TUN0,cap:'0',date:Date.now(),thumb:'',keeps:[],count:0};await resave()}
@@ -312,7 +356,7 @@ const vis=()=>new Promise(r=>{const h=()=>{if(!document.hidden){document.removeE
 function pauseNote(){try{if('Notification' in window&&Notification.permission==='granted')navigator.serviceWorker.ready.then(r=>r.showNotification('folio',{body:'Scan paused. Open folio to continue.',icon:'icon-192.png',tag:'folio'}))}catch(e){}}
 function askNotify(){try{if('Notification' in window&&Notification.permission==='default')Notification.requestPermission()}catch(e){}}
 const lsGet=()=>{try{return JSON.parse(localStorage.getItem('folio-set'))}catch(e){return null}};
-function saveSet(){try{localStorage.setItem('folio-set',JSON.stringify({crop,ar:V.videoWidth/V.videoHeight,ovl,mode:$('#mode').value,step:$('#step').value,sens:$('#sens').value,bpr:$('#bpr').value,auto:$('#auto2').checked}))}catch(e){}}
+function saveSet(){try{localStorage.setItem('folio-set',JSON.stringify({crop,ar:V.videoWidth/V.videoHeight,ovl,mode:$('#mode').value,step:$('#step').value,sens:$('#sens').value,bpr:$('#bpr').value,auto:$('#auto2').checked,secs:$('#secsort').checked}))}catch(e){}}
 async function autoCrop(){const W=V.videoWidth,H=V.videoHeight,cw=480,ch=Math.round(H*cw/W),sc=new Float32Array(ch),col=new Float32Array(cw*ch);let nf=0;
 for(const p of[.12,.3,.5,.7,.88]){await seek(V.duration*p);const c=cv(cw,ch),x=c.getContext('2d');x.drawImage(V,0,0,cw,ch);const d=x.getImageData(0,0,cw,ch).data,L=new Float32Array(cw*ch);for(let i=0;i<L.length;i++)L[i]=d[i*4]*.3+d[i*4+1]*.59+d[i*4+2]*.11;
 for(let y=2;y<ch-2;y++){let n=0;for(let k=0;k<cw;k++){const v=L[y*cw+k];if(Math.abs(v-L[(y-2)*cw+k])>18&&Math.abs(v-L[(y+2)*cw+k])>18){n++;col[y*cw+k]++}}sc[y]+=n/cw}nf++}
@@ -320,7 +364,7 @@ const rows=[];for(let y=0;y<ch;y++)if(sc[y]/nf>.4)rows.push(y);if(rows.length<3)
 const cl=[];let cur=[rows[0]];for(let i=1;i<rows.length;i++){if(rows[i]-rows[i-1]<=ch*.12)cur.push(rows[i]);else{cl.push(cur);cur=[rows[i]]}}cl.push(cur);cl.sort((a,b)=>b.length-a.length);const b=cl[0];if(b.length<3)return null;
 const y0=b[0],y1=b[b.length-1],bh=y1-y0;let xa=cw,xb=0;for(let k=0;k<cw;k++){let n=0;for(const y of b)if(col[y*cw+k]>=nf*.5)n++;if(n>=b.length*.5){if(k<xa)xa=k;xb=k}}
 if(xb-xa<cw*.2)return null;const top=Math.max(0,y0-bh*.55),bot=Math.min(ch,y1+bh*.25),m=cw*.01;return{x:Math.max(0,(xa-m)/cw),y:top/ch,w:Math.min(1,(xb-xa+2*m)/cw),h:(bot-top)/ch}}
-async function restoreOrAuto(){const sv=lsGet();if(sv){if(sv.mode)$('#mode').value=sv.mode;if(sv.step)$('#step').value=sv.step;if(sv.sens){$('#sens').value=sv.sens;sensUp()}if(sv.bpr!=null)$('#bpr').value=sv.bpr;if(sv.auto!=null)$('#auto2').checked=sv.auto;$('#mode').onchange();ovl=sv.ovl||[];upOv();if(sv.crop&&Math.abs(sv.ar-V.videoWidth/V.videoHeight)<.03){crop=sv.crop;return}}
+async function restoreOrAuto(){const sv=lsGet();if(sv){if(sv.mode)$('#mode').value=sv.mode;if(sv.step)$('#step').value=sv.step;if(sv.sens){$('#sens').value=sv.sens;sensUp()}if(sv.bpr!=null)$('#bpr').value=sv.bpr;if(sv.auto!=null)$('#auto2').checked=sv.auto;if(sv.secs!=null)$('#secsort').checked=sv.secs;$('#mode').onchange();ovl=sv.ovl||[];upOv();if(sv.crop&&Math.abs(sv.ar-V.videoWidth/V.videoHeight)<.03){crop=sv.crop;return}}
 const a=await autoCrop();if(a)crop=a;saveSet()}
 $('#auto').onclick=async()=>{if(!V.videoWidth)return;const a=await autoCrop();if(a)crop=a;await seek(+$('#scrub').value);drawPrev(true);saveSet()};
 function sensUp(){const v=+$('#sens').value,p=10/v,ps=(p>=10?'10':p.toFixed(1).replace('.0',''));$('#sval').textContent=v+'  ·  '+ps+'% change';
@@ -370,7 +414,7 @@ async function showLib(){const l=(await dbp('caps','readonly',s=>s.getAll()))||[
 for(const m of l){const d=document.createElement('div');d.className='item';d.innerHTML='<img alt=""><div><b></b><span></span></div>';d.querySelector('img').src=m.thumb;d.querySelector('b').textContent=m.title||m.name;
 d.querySelector('span').textContent=new Date(m.date).toLocaleDateString(undefined,{day:'numeric',month:'short',year:'numeric'})+', '+m.keeps.filter(Boolean).length+(m.keeps.filter(Boolean).length==1?' page':' pages');
 const x=document.createElement('button');x.className='ghost';x.textContent='Delete';x.onclick=async e=>{e.stopPropagation();if(!confirm('Delete this capture?'))return;await dbp(['caps','blobs'],'readwrite',(a,b)=>{a.delete(m.id);b.delete(m.id)});showLib()};d.append(x);d.onclick=()=>openCap(m);box.append(d)}}
-async function openCap(m){const r=await dbp('blobs','readonly',s=>s.get(m.id));if(!r)return;frames=[];for(let i=0;i<r.parts.length;i++){const p=r.parts[i],bm=await createImageBitmap(p.blob),c=cv(bm.width,bm.height);c.getContext('2d').drawImage(bm,0,0);frames.push({label:p.label,t:p.t,t0:p.t0,t1:p.t1,ax:p.ax,dup:p.dup,c,keep:m.keeps[i]!==false})}
+async function openCap(m){const r=await dbp('blobs','readonly',s=>s.get(m.id));if(!r)return;frames=[];for(let i=0;i<r.parts.length;i++){const p=r.parts[i],bm=await createImageBitmap(p.blob),c=cv(bm.width,bm.height);c.getContext('2d').drawImage(bm,0,0);frames.push({label:p.label,t:p.t,t0:p.t0,t1:p.t1,ax:p.ax,dup:p.dup,sec:p.sec,c,keep:m.keeps[i]!==false})}
 cm=m;vname=m.name;fromEntry=true;$('#ttl').value=m.title||m.name;$('#src').value=m.src||'';setTun(m.tun);setCap(m.cap);$('#ename').textContent=m.name+', '+new Date(m.date).toLocaleDateString(undefined,{day:'numeric',month:'short',year:'numeric'});$('#s4').hidden=false;render();go('entry')}
 $('#nav').onclick=()=>go(view=='lib'?'home':'lib');$('#back').onclick=()=>go('lib');
 const TUN0='Standard - EADGBE';
